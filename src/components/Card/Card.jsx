@@ -15,7 +15,7 @@ function Card({id,name,species,gender,image,onClose,addFav,removeFav, myFavorite
       }
       else{
          setIsFav(true)
-         addFav(id ,name, species,gender,image)
+         addFav({id ,name, species,gender,image, onClose})
       }
    }
 
@@ -52,7 +52,7 @@ const mapStateToProps = (state)=>{
 
 const mapDispatchToProps = (dispatch)=>{
    return {
-      addFav: ()=>dispatch(addFav()),
+      addFav: (character)=>dispatch(addFav(character)),
       removeFav: (id)=>dispatch(removeFav(id))
    }
 }
