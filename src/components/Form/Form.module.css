@@ -1,0 +1,9 @@
+.div{
+    background-color: chartreuse;
+    background-size: 15%;
+    display: flex;
+    flex-direction: column;
+}
+
+.input{
+}

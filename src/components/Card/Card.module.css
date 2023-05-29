@@ -1,0 +1,16 @@
+.card{
+    background-color: transparent;
+    margin: 2rem;
+    border-radius: 3rem;
+    border-color: red;
+
+}
+
+.btn{
+    background-color: red;
+}
+
+h2{
+    text-align: center;
+    color: white;
+}
