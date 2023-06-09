@@ -12,8 +12,7 @@ import { useEffect } from 'react';
 import Favorites from './components/favorites/Favorites'
 // eslint-disable-next-line
 
-const EMAIL = 'rick@hotmail.com'
-const PASSWORD = '12345'
+const URL = 'http://localhost:3001/rickandmorty/login/';
 
 function App() {
    
@@ -21,11 +20,19 @@ function App() {
    
    const navigate = useNavigate()
 
-   const login = (userData)=>{
-      if(userData.email === EMAIL && userData.password === PASSWORD){
-         setAccess(true)
-         navigate('/home')
+   async function login(userData) {
+      try {
+         const { email, password } = userData;
+         const {data} = await axios(URL + `?email=${email}&password=${password}`)
+         const { access } = data;
+
+         setAccess(data);
+         access && navigate('/home');
+
+      } catch (error) {
+         console.log(error.message)
       }
+
    }
 
    useEffect(() => {
@@ -36,20 +43,24 @@ function App() {
    const [characters, setCharacters] = useState([])
 
 
-   const onSearch =(id) =>{
-      axios(`http://localhost:3001/rickandmorty/character/${id}`)
-         .then(({ data }) => {
-            if (data.name) {
-               setCharacters((oldChars) => [...oldChars, data]);
-            } else {
-               window.alert('¡No hay personajes con este ID!');
-            }
-         });
+   const onSearch = async(id) =>{
+      try {
+         const {data} = await axios(`http://localhost:3001/rickandmorty/character/${id}`)
+         if (data.name) {
+            setCharacters((oldChars) => [...oldChars, data]);
+         }
+      } catch (error) {
+         window.alert('¡No hay personajes con este ID!');
+         
+      }      
+      
+
+            
    }
 
    const onClose = (id)=>{
       setCharacters(
-         characters.filter((character) => character.id !== Number(id))
+         characters.filter((character) => character.id !== parseInt(id))
       )
    }
 
